@@ -1,6 +1,7 @@
 import clr
 import os.path
-project_dir = os.path.dirname(os.path.abspath(__file__))
+#project_dir = os.path.dirname(os.path.abspath(__file__))
+project_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 import sys
 sys.path.append(os.path.join(project_dir, "TestStack.White.0.13.3\\lib\\net40\\"))
 sys.path.append(os.path.join(project_dir, "Castle.Core.3.3.0\\lib\\net40-client\\"))
@@ -20,8 +21,11 @@ from fixture.group import GroupHelper
 
 class App:
 
-    def __init__(self):
-        self.application = Application.Launch("C:\\addressbook_exe\\AddressBook.exe")
+    def __init__(self, path):
+        self.application = Application.Launch(path)
         self.main_window = self.application.GetWindow("Free Address Book")
-
         self.group = GroupHelper(self)
+
+    def exit(self):
+        main_window = self.main_window
+        main_window.Get(SearchCriteria.ByAutomationId("uxExitAddressButton")).Click()

@@ -14,7 +14,7 @@ from TestStack.White.UIItems.Finders import *
 
 clr.AddReferenceByName("UIAutomationTypes, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
 from System.Windows.Automation import *
-
+from model.group import Group
 
 class GroupHelper:
     def __init__(self, app):
@@ -50,3 +50,16 @@ class GroupHelper:
     def exit(self):
         main_window = self.app.main_window
         main_window.Get(SearchCriteria.ByAutomationId("uxExitAddressButton")).Click()
+
+    def delete_group(self, name):
+        main_window = self.app.main_window
+        modal = self.open_group_editor()
+        modal.Get(SearchCriteria.ByText(name)).Select()
+        modal.Get(SearchCriteria.ByAutomationId("uxDeleteAddressButton")).Click()
+        modal.Get(SearchCriteria.ByAutomationId("uxOKAddressButton")).Click()
+        self.close_group_editor(main_window)
+
+
+
+
+
